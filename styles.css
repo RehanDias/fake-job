@@ -1,0 +1,49 @@
+/* Styling for job cards */
+.job-card {
+    margin-bottom: 20px; /* Adds margin at the bottom */
+    -webkit-font-smoothing: antialiased; /* Ensures smooth fonts on webkit browsers */
+    text-rendering: optimizeLegibility; /* Optimizes text rendering */
+    text-size-adjust: 100%; /* Ensures text size adjustment is normal */
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Font stack for compatibility */
+    font-size: 0.9rem; /* Font size smaller than standard */
+    font-weight: 400; /* Normal font weight */
+    line-height: 1.5; /* Line height */
+    color: #4a4a4a; /* Text color */
+    box-sizing: inherit; /* Inherits box-sizing */
+    background-color: transparent; /* Transparent background */
+    padding: 1rem; /* Smaller padding */
+    border-radius: 5px; /* Same border radius for all sides */
+
+    /* Responsive adjustments for mobile devices */
+    @media only screen and (max-width: 600px) {
+        padding: 0.8rem; /* Adjust padding for smaller screens */
+        font-size: 0.8rem; /* Adjust font size for smaller screens */
+    }
+}
+
+/* Styling for card titles within job cards */
+.job-card .card-title {
+    font-size: 1.1rem; /* Font size for titles */
+    margin-bottom: 5px; /* Reduced bottom margin for titles */
+}
+
+/* Styling for text within job cards */
+.job-card .card-text {
+    font-size: 0.9rem; /* Font size for text */
+    margin-bottom: 5px; /* Reduced bottom margin for text */
+}
+
+/* Styling for job details */
+.job-detail {
+    background-color: rgba(249, 249, 249, 0.9); /* Background color slightly transparent */
+    padding: 15px; /* Padding for job details */
+    border-radius: 5px; /* Border radius for job details */
+    margin-top: 10px; /* Top margin for job details */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for job details */
+    font-size: 0.9rem; /* Same font size as job-card */
+
+    /* Responsive adjustments for mobile devices */
+    @media only screen and (max-width: 600px) {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+}
