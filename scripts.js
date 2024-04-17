@@ -139,11 +139,3 @@ document
 
 // Call fetchJobs function when the page loads
 fetchJobs();
-
-// Call handleSearchInput function when the search input changes
-document
-   .getElementById("searchInput")
-   .addEventListener("input", handleSearchInput);
-
-// Call fetchJobs function when the page loads
-fetchJobs();
