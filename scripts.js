@@ -106,18 +106,21 @@ function handleSearchInput() {
    let inputField = document.getElementById("searchInput");
    let searchTerm = inputField.value;
 
-   // Regular expression to match any numeric character
-   const numericRegex = /\d/;
+   // Regular expression to match any numeric character or symbols
+   const invalidCharactersRegex = /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
-   // Check if the searchTerm contains any numeric characters
-   if (numericRegex.test(searchTerm)) {
-      // If numeric characters are found, remove them from the input
-      inputField.value = searchTerm.replace(/\d/g, "");
+   // Check if the searchTerm contains any numeric characters or symbols
+   if (invalidCharactersRegex.test(searchTerm)) {
+      // If numeric characters or symbols are found, remove them from the input
+      inputField.value = searchTerm.replace(
+         /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g,
+         ""
+      );
 
       // Display warning message
       document.getElementById("warningMessage").style.display = "block";
    } else {
-      // If no numeric characters are found, hide warning message
+      // If no numeric characters or symbols are found, hide warning message
       document.getElementById("warningMessage").style.display = "none";
 
       // Proceed with filtering
