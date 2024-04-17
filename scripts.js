@@ -103,18 +103,42 @@ function formatDate(dateString) {
 
 // Define a function to handle input change event on search input
 function handleSearchInput() {
-   const searchTerm = document
-      .getElementById("searchInput")
-      .value.toLowerCase();
-   const filteredJobs = jobsData.filter((job) => {
-      return (
-         job.title.toLowerCase().includes(searchTerm) ||
-         job.company.toLowerCase().includes(searchTerm) ||
-         job.description.toLowerCase().includes(searchTerm)
-      );
-   });
-   displayJobs(filteredJobs);
+   let inputField = document.getElementById("searchInput");
+   let searchTerm = inputField.value;
+
+   // Regular expression to match any numeric character
+   const numericRegex = /\d/;
+
+   // Check if the searchTerm contains any numeric characters
+   if (numericRegex.test(searchTerm)) {
+      // If numeric characters are found, remove them from the input
+      inputField.value = searchTerm.replace(/\d/g, "");
+
+      // Display warning message
+      document.getElementById("warningMessage").style.display = "block";
+   } else {
+      // If no numeric characters are found, hide warning message
+      document.getElementById("warningMessage").style.display = "none";
+
+      // Proceed with filtering
+      const filteredJobs = jobsData.filter((job) => {
+         return (
+            job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            job.description.toLowerCase().includes(searchTerm.toLowerCase())
+         );
+      });
+      displayJobs(filteredJobs);
+   }
 }
+
+// Call handleSearchInput function when the search input changes
+document
+   .getElementById("searchInput")
+   .addEventListener("input", handleSearchInput);
+
+// Call fetchJobs function when the page loads
+fetchJobs();
 
 // Call handleSearchInput function when the search input changes
 document
