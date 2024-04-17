@@ -1,7 +1,7 @@
 // Define a global variable to store job data
 let jobsData = [];
 
-// Define a function to fetch jobs and display them
+// Function to fetch jobs and display them
 function fetchJobs() {
    // Fetch job data from JSON file
    fetch("jobsData.json")
@@ -19,19 +19,11 @@ function displayJobs(jobs) {
    const jobsList = document.getElementById("jobsList");
    jobsList.innerHTML = ""; // Clear existing job listings
 
-   // If there are no jobs, show the "No matching results found" message
-   if (jobs.length === 0) {
-      document.getElementById("noResultsMessage").style.display = "block";
-   } else {
-      // Hide the "No matching results found" message if there are jobs
-      document.getElementById("noResultsMessage").style.display = "none";
-
-      // Loop through each job and create a job card
-      jobs.forEach((job) => {
-         const jobCard = createJobCard(job);
-         jobsList.appendChild(jobCard);
-      });
-   }
+   // Loop through each job and create a job card
+   jobs.forEach((job) => {
+      const jobCard = createJobCard(job);
+      jobsList.appendChild(jobCard);
+   });
 }
 
 // Function to create a job card
@@ -109,10 +101,24 @@ function formatDate(dateString) {
    return date.toLocaleDateString("en-US", options);
 }
 
-// Define a function to handle input change event on search input
+// Function to handle input change event on search input
 function handleSearchInput() {
    let inputField = document.getElementById("searchInput");
    let searchTerm = inputField.value;
+
+   // Remove existing warning message if it exists
+   const existingWarningMessage = document.getElementById("warningMessage");
+   if (existingWarningMessage) {
+      existingWarningMessage.remove();
+   }
+
+   // Remove existing "No Matching Results" message if it exists
+   const existingNoResultsContainer = document.querySelector(
+      ".no-results-container"
+   );
+   if (existingNoResultsContainer) {
+      existingNoResultsContainer.remove();
+   }
 
    // Regular expression to match any numeric character or symbols
    const invalidCharactersRegex = /[0-9!@#$%^&*()_+\=\[\]{};':"\\|,.<>\/?]/;
@@ -125,12 +131,17 @@ function handleSearchInput() {
          ""
       );
 
-      // Display warning message
-      document.getElementById("warningMessage").style.display = "block";
-   } else {
-      // If no numeric characters or symbols are found, hide warning message
-      document.getElementById("warningMessage").style.display = "none";
+      // Create warning message dynamically
+      const warningMessage = `
+         <div class="warning" id="warningMessage" style="color: red;">
+            Please do not enter numbers or symbols.
+         </div>
+      `;
 
+      // Insert warning message after the input-group div
+      const inputGroup = document.querySelector(".input-group.mb-3");
+      inputGroup.insertAdjacentHTML("afterend", warningMessage);
+   } else {
       // Proceed with filtering
       const filteredJobs = jobsData.filter((job) => {
          return (
@@ -141,7 +152,26 @@ function handleSearchInput() {
       });
 
       // Display jobs or "No results" message
-      displayJobs(filteredJobs);
+      if (filteredJobs.length === 0) {
+         // Display "No Matching Results" message dynamically
+         const noResultsMessage = `
+            <div class="no-results-container">
+               <div class="no-results" id="noResultsMessage" style="margin-bottom: 10px; justify-content: center; align-items: center; text-align: center; padding: 10px;">
+                  No matching results found.
+               </div>
+            </div>
+         `;
+
+         // Insert "No Matching Results" message after the input-group div
+         const inputGroup = document.querySelector(".input-group.mb-3");
+         inputGroup.insertAdjacentHTML("afterend", noResultsMessage);
+
+         // Hide jobsList
+         document.getElementById("jobsList").innerHTML = "";
+      } else {
+         // If there are matching results, display jobs
+         displayJobs(filteredJobs);
+      }
    }
 }
 
