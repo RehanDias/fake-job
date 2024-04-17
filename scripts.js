@@ -19,11 +19,19 @@ function displayJobs(jobs) {
    const jobsList = document.getElementById("jobsList");
    jobsList.innerHTML = ""; // Clear existing job listings
 
-   // Loop through each job and create a job card
-   jobs.forEach((job) => {
-      const jobCard = createJobCard(job);
-      jobsList.appendChild(jobCard);
-   });
+   // If there are no jobs, show the "No matching results found" message
+   if (jobs.length === 0) {
+      document.getElementById("noResultsMessage").style.display = "block";
+   } else {
+      // Hide the "No matching results found" message if there are jobs
+      document.getElementById("noResultsMessage").style.display = "none";
+
+      // Loop through each job and create a job card
+      jobs.forEach((job) => {
+         const jobCard = createJobCard(job);
+         jobsList.appendChild(jobCard);
+      });
+   }
 }
 
 // Function to create a job card
@@ -107,13 +115,13 @@ function handleSearchInput() {
    let searchTerm = inputField.value;
 
    // Regular expression to match any numeric character or symbols
-   const invalidCharactersRegex = /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+   const invalidCharactersRegex = /[0-9!@#$%^&*()_+\=\[\]{};':"\\|,.<>\/?]/;
 
    // Check if the searchTerm contains any numeric characters or symbols
    if (invalidCharactersRegex.test(searchTerm)) {
       // If numeric characters or symbols are found, remove them from the input
       inputField.value = searchTerm.replace(
-         /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g,
+         /[0-9!@#$%^&*()_+\=\[\]{};':"\\|,.<>\/?]/g,
          ""
       );
 
@@ -131,6 +139,8 @@ function handleSearchInput() {
             job.description.toLowerCase().includes(searchTerm.toLowerCase())
          );
       });
+
+      // Display jobs or "No results" message
       displayJobs(filteredJobs);
    }
 }
